@@ -31,7 +31,7 @@ class Author(models.Model): # Модель автора
         self.save()
 
 
-class Category(models.Model):
+class Category(models.Model): # Модель категорий
     category_name = models.CharField(max_length=25, unique=True, verbose_name=_('Name of category'))
     subscribers = models.ManyToManyField(User, related_name='categories')
 
