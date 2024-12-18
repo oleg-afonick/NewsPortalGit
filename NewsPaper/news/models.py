@@ -7,7 +7,7 @@ from django.core.cache import cache
 from django.utils.translation import gettext_lazy as _
 
 
-class Author(models.Model):
+class Author(models.Model): # Модель автора
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='author')
     author_rating = models.IntegerField(default=0, verbose_name="Автор публикации")
 
