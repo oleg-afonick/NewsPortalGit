@@ -1,0 +1,7 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+  <p><h2><span style="color: orangered;">{% trans 'Access closed' %}!</span></h2>
+<p>Извините, но пользователи в статусе "Читатель" не могут создавать публикации!</p>
+<a href="{% url 'upgrade' %}" class="btn btn btn-outline-success btn-sm"><span class="icon"><i class="fa fa-file-text-o"></i></span>&nbsp;Стать автором</a>
+{% endblock %}

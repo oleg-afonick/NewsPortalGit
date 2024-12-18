@@ -1,0 +1,110 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% trans 'Post Comment' %}
+{% endblock title %}
+
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3>{% trans 'User comment' %} <a href="{% url 'profile_detail' comment.user.id %}" style="text-decoration: none">{{ comment.user }}</a></h3>
+<h5>{% trans 'on the post' %} {% trans '#' %} <span style="color: orangered;">{{ post.id }}</span></h5>
+</nav>
+<table width="100%" border="0" style="margin-top: 110px">
+    <tr>
+        <td align="left">
+            <h5><i><a href="{% url 'type_list' post.post_type %}" style="text-decoration: none;">{{ post.get_post_type_display|title }}:</a></i></h5>
+            <font size="3"><span class="icon"><i class="fa fa-user"></i></span>&ensp;
+            <i><a href="{% url 'profile_detail' post.author.user.id %}" style="text-decoration: none;">{{ post.author }}</a>
+            {% if post.author.author_rating > 9 %}
+            (<span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% elif post.author.author_rating > 0 %}
+            (<span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% else %}
+            (<span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            </i>
+            {% endif %}
+            <br>
+            <span class="icon"><i class="fa fa-calendar"></i></span>&ensp;<i>{{ post.date_creation }}</i>
+            <br>
+            <i>{% if post.post_rating > 3 %}
+            <span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.post_rating }}
+            {% elif post.post_rating > 0 %}
+            <span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.post_rating }}
+            {% else %}
+            <span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.post_rating }}
+            </i>
+            {% endif %}
+            <br>
+            <font size="4">
+            <span style="color: green;"><span class="icon"><i class="fa fa-file-text"></i></span>&ensp;<i>{{ post.post_title }}</i></span>
+            <br>
+            <span style="color: brown;"><span class="icon"><i class="fa fa-align-left"></i></span>&ensp;<i>{{ post.post_text|censor }}</i></span>
+            </font>
+            <br><br>
+            <a href="{% url 'post_list' %}" class="btn btn btn-outline-primary btn-sm">
+                <span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'To all publications' %}</a>&emsp;
+            <a href="{% url 'post_detail' post.id %}" class="btn btn btn-outline-success btn-sm">
+                <span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'To Publication' %} {% trans '#' %} {{ post.id }}</a>&emsp;
+        </td>
+    </tr>
+</table>
+<br>
+<table style="width: 1350px;">
+    <tr>
+        <td>
+            <font size="4">
+                <span style="color: black;"><span class="icon"><i class="fa fa-comment"></i></span>&ensp;{% trans 'Comment text' %}</span>
+            </font>
+            <p></p>
+        </td>
+    </tr>
+    <tr>
+        <td align="left" class="class=m-b-0 font-medium btn-rounded">
+            <i><font size="4">
+                &nbsp;<span style="color: black;">{{ comment.comment_text|censor }}</span>
+            </font></i>
+        </td>
+    </tr>
+</table>
+<br>
+<table width="100%" border="0">
+    <tr>
+        <td align="left">
+        {% if comment.user != request.user %}
+        {% if not is_comment_likes %}
+        <a href="{% url 'comment_like' comment.id %}" class="btn btn btn-outline-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-up"></i></span>&nbsp;</a>
+        {% else %}
+        <a href="{% url 'comment_like' comment.id %}" class="btn btn btn-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-up"></i></span>&nbsp;+1</a>
+        {% endif %}
+        {% if not is_comment_dislikes %}
+        <a href="{% url 'comment_dislike' comment.id %}" class="btn btn btn-outline-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-down"></i>&nbsp;</span></a>&emsp;
+        {% else  %}
+        <a href="{% url 'comment_dislike' comment.id %}" class="btn btn btn-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-down"></i>&nbsp;</span>-1</a>&emsp;
+        {% endif %}
+        {% endif %}
+            {% if comment.user == request.user %}
+            <a href="{% url 'comment_edit' comment.id %}" class="btn btn btn-success btn-sm"><span class="icon"><i class="fa fa-pencil-square-o"></i></span>&nbsp;{% trans 'Edit' %}</a>
+            <a href="{% url 'comment_delete' comment.id %}" class="btn btn btn-danger btn-sm"><span class="icon"><i class="fa fa-minus-square-o"></i></span>&nbsp;{% trans 'Delete' %}</a>&emsp;
+            {% endif %}
+        {% if comment.comment_rating == 0 %}
+        <a href="" class="btn btn btn-secondary btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-meh-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% elif comment.comment_rating > 0 %}
+        <a href="" class="btn btn btn-success btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-smile-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% else %}
+        <a href="" class="btn btn btn-danger btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-frown-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% endif %}
+        <a href="{% url 'post_comments_list' post.id %}" class="btn btn btn-warning btn-sm"><span class="icon"><i class="fa fa-comments"></i></span>&nbsp;{% trans 'All comments on' %} {% trans '#' %} {{ post.id }}</a>&nbsp;
+        {% if comment.user.id == request.user.id %}
+        <a href="{% url 'user_comments_list' comment.user.id %}" class="btn btn btn-info btn-sm"><span class="icon"><i class="fa fa-comments-o"></i></span>&nbsp;{% trans 'All your comments' %}</a>
+        {% endif %}
+        </td>
+    </tr>
+</table>
+<br>
+<br>
+{% endblock content %}

@@ -1,0 +1,33 @@
+04/05/2024 00:12:43 INFO autoreload Watching for file changes with StatReloader
+04/05/2024 00:12:48 INFO basehttp "GET /reerf HTTP/1.1" 200 160
+04/05/2024 00:15:16 INFO autoreload C:\SkillFactory\NewsPortalProject\NewsPaper\news\views.py changed, reloading.
+04/05/2024 00:15:18 INFO autoreload Watching for file changes with StatReloader
+04/05/2024 00:15:27 INFO autoreload C:\SkillFactory\NewsPortalProject\NewsPaper\NewsPaper\urls.py changed, reloading.
+04/05/2024 00:15:28 INFO autoreload Watching for file changes with StatReloader
+04/05/2024 00:15:41 WARNING log Not Found: /рятря
+04/05/2024 00:15:41 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 160
+04/05/2024 00:16:36 INFO autoreload C:\SkillFactory\NewsPortalProject\NewsPaper\NewsPaper\urls.py changed, reloading.
+04/05/2024 00:16:37 INFO autoreload Watching for file changes with StatReloader
+04/05/2024 00:16:40 WARNING log Not Found: /рятря
+04/05/2024 00:16:40 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 169
+04/05/2024 00:17:34 WARNING log Not Found: /рятря
+04/05/2024 00:17:34 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 209
+04/05/2024 00:18:56 WARNING log Not Found: /рятря
+04/05/2024 00:18:56 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 4549
+04/05/2024 00:19:03 INFO basehttp "POST /i18n/setlang/ HTTP/1.1" 302 0
+04/05/2024 00:19:03 WARNING log Not Found: /рятря
+04/05/2024 00:19:03 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 4612
+04/05/2024 00:22:10 WARNING log Not Found: /рятря
+04/05/2024 00:22:10 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 4607
+04/05/2024 00:22:25 WARNING log Not Found: /рятря
+04/05/2024 00:22:25 WARNING basehttp "GET /%D0%B0%D0%BF%D0%B2%D0%B0%D0%BF HTTP/1.1" 404 4607
+04/05/2024 00:22:35 INFO basehttp "GET /news/top/ HTTP/1.1" 200 77186
+04/05/2024 00:22:37 INFO basehttp "GET /news/ HTTP/1.1" 200 70369
+04/05/2024 00:22:39 INFO basehttp "GET /news/search/ HTTP/1.1" 200 58749
+04/05/2024 00:22:39 WARNING log Not Found: /static/css/profile.css
+04/05/2024 00:22:39 WARNING basehttp "GET /static/css/profile.css HTTP/1.1" 404 4607
+04/05/2024 00:22:41 INFO basehttp "GET /news/create/ HTTP/1.1" 302 0
+04/05/2024 00:22:41 INFO basehttp "GET /accounts/login/?next=/news/create/ HTTP/1.1" 200 7247
+04/05/2024 00:22:47 INFO basehttp "GET /accounts/login/?next=/news/create/rter5t HTTP/1.1" 200 7247
+04/05/2024 00:22:54 WARNING log Not Found: /retrty
+04/05/2024 00:22:54 WARNING basehttp "GET /retrty HTTP/1.1" 404 4607

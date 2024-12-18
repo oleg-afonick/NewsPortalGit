@@ -1,0 +1,10 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+  <p><h3><span style="color: orangered;">{% trans 'Access closed' %}!</span></h3>
+<p></p>
+<h5>{% trans 'You cannot edit or delete other users posts' %}</h5>
+<p></p>
+<div><a href="{% url 'post_detail' post_id %}" class="btn btn btn-outline-primary btn-sm">
+                <span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'Back to publication' %} {% trans '#' %} {{ post_id }}</a></div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+{% load i18n %}
+
+{% block content %}
+{% include 'input_output.html' %}
+<h2><span style="color: #1616f6;">{% trans 'Deleting a comment' %} {% trans '#' %} {{ object.id }}</span></h2>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p><h4>{% trans 'After confirmation' %}</h4>
+    <h5>{% trans 'Comment' %}: <span style="color: #1616f6;"><i>"{{ object.comment_text }}"</i></span></h5>
+    <p><h5>{% trans 'For publication' %}: <span style="color: #1616f6;"><i>"{{ post.post_title }}"</i></span></h5>
+        <p><h4><span style="color: orangered;">{% trans 'will be deleted' %}</span></h4>
+    <br>
+    <input class="btn btn-danger btn-sm " type="submit" value="{% trans 'Delete' %}"/>&emsp;&emsp;<a href="{% url 'post_comment_detail' object.id %}" class="btn btn-primary btn-sm">{% trans 'Cancel' %}</a>
+</form>
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% extends "flatpages/default.html" %}
+{% load crispy_forms_filters %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+<script href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans 'Signup' %}</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="https://fogsoft.com/wp-content/uploads/2017/07/user-logo.png" alt="">
+        </div>
+        <div class="text-center mt-4 name">
+            {% trans 'Signup' %}
+        </div>
+        <form class="p-3 mt-3" method="post">
+            {% csrf_token %}
+            <div class="form-field d-flex align-items-center">
+                <span class="fa fa-user-plus" aria-hidden="true"></span>
+                <label>
+                    <input class="text" type="text" name="username" placeholder="{% trans 'Username' %}">
+                </label>
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fa fa-envelope" aria-hidden="true"></span>
+                <label>
+                    <input class="text email" type="email" name="email" placeholder="{%  trans 'Email' %}">
+                </label>
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <label>
+                    <input class="text" type="password" name="password1" placeholder="{% trans 'Password' %}">
+                </label>
+            </div>
+            <div class="form-field d-flex align-items-center">
+                <span class="fas fa-key"></span>
+                <label>
+                    <input class="text" type="password" name="password2" placeholder="{% trans 'Repeat password' %}">
+                </label>
+            </div>
+            {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                        <small>{{ error|escape }}</small>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                        <small>{{ error|escape }}</small>
+                        </div>
+                    {% endfor %}
+            {% endif %}
+            <button class="btn mt-3">{% trans 'Signup' %}</button>
+        </form>
+        <div class="text-center fs-6">
+            <p>{% trans 'Already have an account' %}? <a style="font-size: 16px; " href="{% url 'login' %}"> {% trans 'Login' %}</a></p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

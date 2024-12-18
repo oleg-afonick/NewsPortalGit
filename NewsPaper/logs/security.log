@@ -1,0 +1,19 @@
+07/10/2023 20:17:12 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:34:19 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:36:22 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:37:33 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:41:24 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:41:42 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:50:37 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:51:56 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:52:26 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:53:40 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 21:55:11 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 22:00:45 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 22:09:38 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 22:09:54 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 22:11:46 WARNING log Forbidden (CSRF token missing.): /news/create/
+21/10/2023 22:12:10 WARNING log Forbidden (CSRF token missing.): /news/create/
+16/04/2024 21:21:52 WARNING log Forbidden (CSRF token from POST incorrect.): /i18n/setlang/
+16/04/2024 21:21:57 WARNING log Forbidden (CSRF token from POST incorrect.): /i18n/setlang/
+16/04/2024 21:22:14 WARNING log Forbidden (CSRF token from POST incorrect.): /i18n/setlang/

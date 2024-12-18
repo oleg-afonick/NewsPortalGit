@@ -1,0 +1,206 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% load crispy_forms_filters %}
+{% trans 'Publication' %}
+{% endblock title %}
+
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3><span style="color: #1616f6;">{% trans 'Publication' %} {% trans '#' %} {{ post.pk }}</span></h3>
+</nav>
+<table width="100%" border="0" style="margin-top: 40px">
+    <tr>
+        <td align="justify">
+            <h6><i><u>{% trans 'Publication Information' %}:</u></i></h6>
+            <span style="font-size: medium; "><i><b>{% trans 'Author' %}:</b>
+            <i><a href="{% url 'profile_detail' post.author.user.id %}" style="text-decoration: none;">{{ post.author }}</a>
+            {% if post.author.author_rating > 9 %}
+            (<span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% elif post.author.author_rating > 0 %}
+            (<span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% else %}
+            (<span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            </i>
+            {% endif %}
+            <br>
+            <i><b>{% trans 'Type' %}:</b> <a href="{% url 'type_list' post.post_type %}" style="text-decoration: none;">{{ post.get_post_type_display }}</a></i>
+            <br>
+            <i><b>{% trans 'Date' %}:</b> {{ post.date_creation }}</i>
+            <br>
+            <i><b>{% trans 'Rating' %}:</b> {{ post.post_rating }}</i>
+            <br>
+            <i><b>{% trans 'Categories' %}:</b> </i>
+            {% for category in post.post_category.all %}
+            <a href="{% url 'category_list' category.id %}" style="text-decoration: none;">"{{ category.category_name }}"</a>
+            {% endfor %}
+            <br>
+                <i><b>{% trans 'Title' %}:</b> <span style="color: green;">{{ post.post_title }}</span></i>
+            <br><br>
+            <a href="{% url 'post_list' %}" class="btn btn btn-outline-primary btn-sm"><span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'To all publications' %}</a>&emsp;&emsp;
+            <a href="{% url 'author_list' post.author.id %}" class="btn btn btn-outline-success btn-sm"><span class="icon"><i class="fa fa-file-text-o"></i></span>&nbsp;{% trans "Author's publications" %}</a>&emsp;&emsp;
+        </td>
+    </tr>
+</table>
+<br>
+<table width="100%" border="0">
+    <tr>
+        <td align="center">
+            <i><font size="5">
+            {% trans 'Content' %}:
+            </font></i>
+
+            <br>
+        </td>
+    </tr>
+</table>
+<div class="class=m-b-0 font-medium btn-rounded" style="margin-top: 20px">
+<table>
+    <tr>
+        <td align="justify">
+            <i><font size="4">
+                &emsp;&emsp;<span style="color: brown;">{{ post.post_text|censor }}</span>
+            </font></i>
+        </td>
+    </tr>
+</table>
+</div>
+<table style="margin-top: 30px" width="100%" border="0">
+    <tr>
+        <td align="left">
+        {% if post.author != request.user.author %}
+        {% if  not is_post_likes %}
+        <a href="{% url 'post_like' post.id %}" class="btn btn-outline-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-up"></i></span>&nbsp;</a>
+        {% else %}
+        <a href="{% url 'post_like' post.id %}" class="btn btn-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-up"></i></span>&nbsp;+1</a>
+        {% endif %}
+        {% if not is_post_dislikes %}
+        <a href="{% url 'post_dislike' post.id %}" class="btn btn-outline-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-down"></i>&nbsp;</span></a>&emsp;
+        {% else  %}
+        <a href="{% url 'post_dislike' post.id %}" class="btn btn-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-down"></i>&nbsp;</span>-1</a>&emsp;
+        {% endif %}
+        {% endif %}
+        {% if post.post_type == 'NW' %}
+            {% if post.author == request.user.author %}
+            <a href="{% url 'post_edit' post.id %}" class="btn btn btn-success btn-sm"><span class="icon"><i class="fa fa-pencil-square-o"></i></span>&nbsp;{% trans 'Edit' %}</a>
+            <a href="{% url 'post_delete' post.id %}" class="btn btn btn-danger btn-sm"><span class="icon"><i class="fa fa-minus-square-o"></i></span>&nbsp;{% trans 'Delete' %}</a>&emsp;
+            {% endif %}
+            {% else %}
+            {% if post.author == request.user.author %}
+            <a href="{% url 'articles_edit' post.id %}" class="btn btn btn-success btn-sm"><span class="icon"><i class="fa fa-pencil-square-o"></i></span>&nbsp;{% trans 'Edit' %}</a>
+            <a href="{% url 'articles_delete' post.id %}" class="btn btn btn-danger btn-sm"><span class="icon"><i class="fa fa-minus-square-o"></i></span>&nbsp;{% trans 'Delete' %}</a>&emsp;
+            {% endif %}
+            {% endif %}
+        {% if post.post_rating == 0 %}
+        <a href="" class="btn btn btn-secondary btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-meh-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ post.post_rating }}</a>&emsp;&emsp;
+        {% elif post.post_rating > 0 %}
+        <a href="" class="btn btn btn-success btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-smile-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ post.post_rating }}</a>&emsp;&emsp;
+        {% else %}
+        <a href="" class="btn btn btn-danger btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-frown-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ post.post_rating }}</a>&emsp;&emsp;
+        {% endif %}
+{#        <a href="{% url 'comment_create' post.id %}" class="btn btn btn-info btn-sm"><span class="icon"><i class="fa fa-comment-o"></i></span>&nbsp;{% trans 'Create a comment' %}</a>&emsp;#}
+        <a href="{% url 'post_comments_list' post.id %}" class="btn btn btn-warning btn-sm"><span class="icon"><i class="fa fa-comments-o"></i></span>&nbsp;{% trans 'All comments' %} ({{ comments.count }})</a>
+        </td>
+    </tr>
+</table>
+{% if user.is_authenticated %}    
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input style="margin-top: 10px" class="btn btn-primary btn-sm" type="submit" value="{% trans 'Save' %}"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-12 text-center" style="margin-top: 20px">
+            <span style="color: #1616f6;"><i>Комментарии могут оставлять только авторизованные пользователи</i></span>    
+        </div>
+    </div>
+</div>    
+{% endif %}    
+    <br>
+<h3>Все комментарии:</h3>
+{% if comments %}
+    {% for comment in comments %}
+    <div class="class=m-b-0 font-medium btn-rounded" style="margin-top: 20px">
+        <font size="4">
+<table width="100%" border="0">
+    <tr>
+        <td align="right"><i>{% if comment.comment_rating > 3 %}
+            <span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ comment.comment_rating }}
+            {% elif comment.comment_rating > 0 %}
+            <span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ comment.comment_rating }}
+            {% else %}
+            <span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ comment.comment_rating }}
+            </i>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+</font>
+<table style="width: 1420px;" width="100%" border="0">
+    <tr>
+        <td align="justify">
+            <span style="font-size: small; "><span class="icon"><i class="fa fa-user"></i></span>&ensp;
+                <i><a href="{% url 'post_comment_detail' comment.user.id %}" style="text-decoration: none;">{{ comment.user }}</a></i>
+            <br>
+            <span class="icon"><i class="fa fa-calendar"></i></span>&ensp;<i>{{ comment.date_creation }}</i>
+            <br>
+                <span style="color: green; font-size: 20px;"><span class="icon"><i class="fa fa-file-text"></i></span>&ensp;<i>{{ comment.comment_text }}</i></span>
+             <br>
+            </span>
+            <br>
+        </td>
+    </tr>
+</table>
+<table width="100%" border="0">
+    <tr>
+        <td align="left">
+        {% if comment.user != request.user %}
+        {% if not request.user in comment.comment_likes.all %}
+        <a href="{% url 'comment_like' comment.id %}" class="btn btn btn-outline-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-up"></i></span>&nbsp;</a>
+        {% else %}
+        <a href="{% url 'comment_like' comment.id %}" class="btn btn btn-success btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-up"></i></span>&nbsp;+1</a>
+        {% endif %}
+        {% if not request.user in comment.comment_dislikes.all %}
+        <a href="{% url 'comment_dislike' comment.id %}" class="btn btn btn-outline-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-down"></i>&nbsp;</span></a>&emsp;
+        {% else  %}
+        <a href="{% url 'comment_dislike' comment.id %}" class="btn btn btn-danger btn-sm" style="width: 70px;"><span class="icon"><i class="fa fa-thumbs-o-down"></i>&nbsp;</span>-1</a>&emsp;
+        {% endif %}
+        {% endif %}
+            {% if comment.user == request.user %}
+            <a href="{% url 'comment_edit' comment.id %}" class="btn btn btn-success btn-sm"><span class="icon"><i class="fa fa-pencil-square-o"></i></span>&nbsp;{% trans 'Edit' %}</a>
+            <a href="{% url 'comment_delete' comment.id %}" class="btn btn btn-danger btn-sm"><span class="icon"><i class="fa fa-minus-square-o"></i></span>&nbsp;{% trans 'Delete' %}</a>&emsp;
+            {% endif %}
+        {% if comment.comment_rating == 0 %}
+        <a href="" class="btn btn btn-secondary btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-meh-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% elif comment.comment_rating > 0 %}
+        <a href="" class="btn btn btn-success btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-smile-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% else %}
+        <a href="" class="btn btn btn-danger btn-sm" style="width: 115px;"><span class="icon"><i class="fa fa-frown-o"></i></span>&nbsp;{% trans 'Rating' %}: {{ comment.comment_rating }}</a>&emsp;&emsp;
+        {% endif %}
+        <a href="{% url 'post_comments_list' post.id %}" class="btn btn btn-warning btn-sm"><span class="icon"><i class="fa fa-comments"></i></span>&nbsp;{% trans 'All comments on' %} {% trans '#' %} {{ post.id }}</a>&nbsp;
+        {% if comment.user.id == request.user.id %}
+        <a href="{% url 'user_comments_list' comment.user.id %}" class="btn btn btn-info btn-sm"><span class="icon"><i class="fa fa-comments-o"></i></span>&nbsp;{% trans 'All your comments' %}</a>
+        {% endif %}
+        </td>
+    </tr>
+</table>
+        </div>
+    {% endfor %}
+    {% else %}
+    Комментариев нет!
+{% endif %}
+
+{% endblock content %}
+

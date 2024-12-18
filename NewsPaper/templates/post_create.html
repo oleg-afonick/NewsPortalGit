@@ -1,0 +1,22 @@
+{% extends 'flatpages/default.html' %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<h2><span style="color: #1616f6;">{{ add_post_type }}</span></h2>
+</nav>
+<br>
+<div class="d-flex justify-content-center" style="margin-top: 65px">
+    <div class="row">
+        <div class="col-lg-auto text-center">
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <br>
+    <input class="btn btn-primary btn-sm" type="submit" value="{% trans 'Save' %}"/>
+</form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

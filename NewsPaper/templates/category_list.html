@@ -1,0 +1,105 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% block title %}
+Publications
+{% endblock title %}
+{% load static %}
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3>{% trans 'All publications in the category' %} <span style="color: orangered;">{{ category }}</span></h3>
+</nav>
+<h5>{% trans 'Total' %}: <span style="color: orangered;">{{ page_obj.paginator.count }}</span></h5>
+{% if is_not_subscriber %}
+<i class="text-center">{% trans 'Subscribe and you will be notified of new posts in this category' %}</i>
+    <br>
+<p></p>
+    <a href="{% url 'subscribe' category.id %}" class="btn btn-outline-primary btn-sm"><span class="icon"><i class="fa fa-plus-square"></i></span>&nbsp;{% trans 'Subscribe' %}</a>
+<p></p>
+{% endif %}
+{% if is_subscriber %}
+<i class="text-center">{% trans 'You are subscribed to receive notifications about new publications in this category' %}</i>
+    <br>
+<p></p>
+    <a href="{% url 'unsubscribe' category.id %}" class="btn btn-outline-primary btn-sm"><span class="icon"><i class="fa fa-minus-square"></i></span>&nbsp;{% trans 'Unsubscribe' %}</a>
+<p></p>
+{% endif %}
+{% if category_posts_list %}
+{% for post in category_posts_list %}
+    <div class="class=m-b-0 font-medium btn-rounded" style="margin-top: 20px">
+        <font size="4">
+<i><a href="{% url 'type_list' post.post_type %}">{{ post.get_post_type_display|title }}</a> № <span style="color: orangered;">{{ post.pk }}</span></i>
+<table width="100%" border="0">
+    <tr>
+        <td align="right"><i>{% if post.post_rating > 3 %}
+            <span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.post_rating }}
+            {% elif post.post_rating > 0 %}
+            <span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.post_rating }}
+            {% else %}
+            <span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.post_rating }}
+            </i>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+</font>
+<table style="width: 1420px;" width="100%" border="0">
+    <tr>
+        <td align="justify">
+            <font size="3"><span class="icon"><i class="fa fa-user"></i></span>&ensp;
+                <i><a href="{% url 'profile_detail' post.author.user.id %}" style="text-decoration: none;">{{ post.author }}</a>
+            {% if post.author.author_rating > 9 %}
+            (<span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% elif post.author.author_rating > 0 %}
+            (<span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% else %}
+            (<span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            </i>
+            {% endif %}
+            <br>
+            <span class="icon"><i class="fa fa-calendar"></i></span>&ensp;<i>{{ post.date_creation }}</i>
+            <br>
+            <span class="icon"><i class="fa fa-flag"></i></span>&nbsp;
+            {% for category in post.post_category.all %}
+            <a href="{% url 'category_list' category.id %}" style="text-decoration: none;">"{{ category }}"</a>
+            {% endfor %}
+            <br>
+                <span style="color: green;"><span class="icon"><i class="fa fa-file-text"></i></span>&ensp;<i>{{ post.post_title }}</i></span>
+             <br>
+            </font>
+            <br>
+        <font size="4">
+            <span style="color: brown;"><span class="icon"><i class="fa fa-align-left"></i></span>&ensp;<i>{{ post.post_text|truncatewords:10|censor }}</span> <a href="{% url 'post_detail' post.pk %}" style="text-decoration: none;">
+            <span class="icon"><i class="fa fa-book"></i></span>&nbsp;{% trans 'Read completely' %}</a></i>
+        </font>
+        </td>
+    </tr>
+</table>
+        </div>
+<p></p>
+{% endfor %}
+{% else %}
+<h2>{% trans 'No publications' %}!</h2>
+{% endif %}
+{% if paginator.num_pages > 1 %}
+{% if page_obj.has_previous %}
+<a href="?page=1">1</a>
+{% if page_obj.previous_page_number != 1 %}
+...
+<a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+{% endif %}
+{% endif %}
+
+{{ page_obj.number }}
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+{% if paginator.num_pages != page_obj.next_page_number %}
+...
+<a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock content %}

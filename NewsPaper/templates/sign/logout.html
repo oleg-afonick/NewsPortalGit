@@ -1,0 +1,9 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+
+{% include 'input_output.html' %}
+
+<h2> {% trans 'You are logout' %} </h2>
+<h5> <a href="{% url 'account_login' %}">{% trans 'Login' %}</a>, {% trans 'to enjoy all the possibilities' %} <span style="color: orangered; ">News Portal </span></h5>
+{% endblock %}

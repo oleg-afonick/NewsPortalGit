@@ -1,0 +1,31 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+Publications
+{% endblock title %}
+
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3 style="text-align: center">Все категории <span style="color: orangered;"></span></h3>
+</nav>
+{% if categories %}
+{% for category in categories %}
+    
+            <i>{{ category.category_name }}</i>
+            <br>
+            {% if request.user not in category.subscribers.all %}
+            <button class="btn btn-outline-secondary btn-sm"><a href="{% url 'subscribe' category.id %}">Подписаться</a></button>
+            {% else %}
+            <button class="btn btn-outline-secondary btn-sm"><a href="{% url 'unsubscribe' category.id %}">Отписаться</a></button>
+            {% endif %}
+<p></p>
+{% endfor %}
+{% else %}
+<h2>{% trans 'No publications' %}!</h2>
+{% endif %}
+{% endblock content %}

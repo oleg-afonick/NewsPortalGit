@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+
+{% block content %}
+{% include 'input_output.html' %}
+<h2><span style="color: #1616f6;">{% trans 'Edit comment' %} {% trans '#' %} {{ object.id }}</span></h2>
+<br>
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-auto text-center">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div id="div_id_comment_text" class="form-group"><label for="id_comment_text" class="requiredField">
+                    {% trans 'Comment text' %}<span class="asteriskField">*</span></label>
+                    <div>
+                        <textarea cols="80" rows="10" name="comment_text" class="textarea form-control" required="" id="id_comment_text">{{ object.comment_text }}</textarea>
+                    </div>
+                </div>
+
+                <br>
+                <input class="btn btn-primary btn-sm" type="submit" value="{% trans 'Save' %}">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

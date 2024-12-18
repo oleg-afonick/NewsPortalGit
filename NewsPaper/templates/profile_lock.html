@@ -1,0 +1,7 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+{% include 'input_output.html' %}      
+  <p><h2><span style="color: orangered;">{% trans 'Access closed' %}!</span></h2>
+<p>{% trans 'Sorry, but the page at the requested address is not available to the current user' %}!</p>
+{% endblock %}

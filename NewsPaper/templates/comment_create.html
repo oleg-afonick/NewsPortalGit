@@ -1,0 +1,44 @@
+{% extends 'flatpages/default.html' %}
+{% load crispy_forms_filters %}
+{% load i18n %}
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<h3>{% trans 'Adding a comment to a post' %} {% trans '#' %} <span style="color: orangered;">{{ post.id }}</span></h3>
+</nav>
+<table width="100%" border="0" style="margin-top: 100px">
+    <tr>
+        <td align="left">
+            <h5><i>{% trans 'Publication Information' %}:</i></h5>
+            <i><b>{% trans 'Author' %}:</b> {{ post.author }}</i>
+            <br>
+            <i><b>{% trans 'Type' %}:</b> {{ post.get_post_type_display }}</i>
+            <br>
+            <i><b>{% trans 'Date' %}:</b> {{ post.date_creation }}</i>
+            <br>
+            <i><b>{% trans 'Rating' %}:</b> {{ post.post_rating }}</i>
+            <br>
+            <i><b>{% trans 'Title' %}:</b> {{ post }}</i>
+            <br>
+            <i><b>{% trans 'Content' %}:</b> {{ post.post_text }}</i>
+            <br><br>
+            <a href="{% url 'post_list' %}" class="btn btn btn-outline-primary btn-sm"><span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'To all publications' %}</a>
+            <a href="{% url 'post_detail' post.id %}" class="btn btn btn-outline-success btn-sm"><span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'To Publication' %} {% trans '#' %} {{ post.id }}</a>
+            <a href="{% url 'post_comments_list' post.id %}" class="btn btn btn-outline-danger btn-sm"><span class="icon"><i class="fa fa-comments-o"></i></span>&nbsp;{% trans 'To the list of comments' %}</a>
+        </td>
+    </tr>
+</table>
+<br>
+<div class="d-flex justify-content-center">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <br>
+                <input class="btn btn-primary btn-sm" type="submit" value="{% trans 'Save' %}"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

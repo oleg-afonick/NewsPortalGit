@@ -1,0 +1,10 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+<p><h2><span style="color: orangered;">{% trans 'Congratulations, you have become an author' %}!</span></h2>
+<br>
+<p>{% trans 'Now you can create your posts' %}!</p>
+<p>{% trans 'Try now to add' %}:</p>
+<div><a href="{% url 'post_create' %}" class="btn btn-primary btn-sm">{% trans 'News' %}</a>&ensp;{% trans 'or' %}&ensp;
+    <a href="{% url 'articles_create' %}" class="btn btn-primary btn-sm">{% trans 'Article' %}</a></div>
+{% endblock %}

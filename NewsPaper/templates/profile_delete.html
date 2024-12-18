@@ -1,0 +1,16 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block title %}
+<title>{% trans 'Delete profile' %}</title>
+{% endblock title %}
+{% block content %}
+    <h3 style="margin-top: 40px"><span style="color: orangered;">{% trans 'Are you sure you want to delete your account' %}?</span></h3>
+    <h5 style="margin-top: 20px">{% trans 'After confirmation, your account will be deleted and it will be impossible to restore it' %}!</h5>
+    <div style="margin-top: 30px">
+    <form method="POST">
+        {% csrf_token %}
+        <input style="margin-right: 20px" class="btn btn-success btn-sm" type="button" onclick="history.back();" value="{% trans 'Cancel' %}"/>
+        <input class="btn btn-danger btn-sm" type="submit" value="{% trans 'Confirm' %}">
+    </form>
+    </div>
+{% endblock content %}

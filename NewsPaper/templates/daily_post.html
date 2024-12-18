@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Публикации за неделю</title>
+</head>
+<body>
+<h2>Здравствуйте!
+    <br>
+    Прислали вам список публикаций,
+    <br>
+    добавленных за последнюю неделю в категориях,
+    <br>
+    на которые вы подписаны:</h2>
+<ul>
+    {% for post in posts %}
+    <li><a href="http://127.0.0.1:8000{{ post.get_absolute_url }}">{{ post.post_title }}</a></li>
+    {% endfor %}
+</body>
+</html>

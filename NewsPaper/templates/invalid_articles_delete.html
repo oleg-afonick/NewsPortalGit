@@ -1,0 +1,8 @@
+{% extends "flatpages/default.html" %}
+{% load i18n %}
+{% block content %}
+  <p><h3><span style="color: orangered;">{% trans 'You are trying to delete an article at news address' %}</span></h3>
+<p></p>
+<div><a href="{% url 'articles_delete' post_id %}" class="btn btn btn-outline-primary btn-sm">
+                <span class="icon"><i class="fa fa-undo"></i></span>&nbsp;{% trans 'Go to correct address' %}</a></div>
+{% endblock %}

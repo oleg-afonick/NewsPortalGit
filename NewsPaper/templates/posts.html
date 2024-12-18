@@ -1,0 +1,73 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+{% trans 'Publications' %}
+{% endblock title %}
+
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3 style="text-align: center">{% trans 'Total publications' %}: <span style="color: orangered;">{{ page_obj.paginator.count }}</span></h3>
+</nav>
+{% if posts %}
+{% for post in posts %}
+    <div class="class=m-b-0 font-medium btn-rounded" style="margin-top: 80px">
+        <font size="4">
+<i><a href="{% url 'type_list' post.post_type %}">{{ post.get_post_type_display|title }}</a> {% trans '#' %} <span style="color: orangered;">{{ post.pk }}</span></i>
+<table width="100%" border="0">
+    <tr>
+        <td align="right"><i>{% if post.post_rating > 3 %}
+            <span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.post_rating }}
+            {% elif post.post_rating > 0 %}
+            <span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.post_rating }}
+            {% else %}
+            <span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.post_rating }}
+            </i>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+</font>
+<table style="width: 1420px;" width="100%" border="0">
+    <tr>
+        <td align="justify">
+            <font size="3"><span class="icon"><i class="fa fa-user"></i></span>&ensp;
+                <i><a href="{% url 'profile_detail' post.author.user.id %}" style="text-decoration: none;">{{ post.author }}</a>
+            {% if post.author.author_rating > 9 %}
+            (<span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% elif post.author.author_rating > 0 %}
+            (<span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            {% else %}
+            (<span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ post.author.author_rating }})
+            </i>
+            {% endif %}
+            <br>
+            <span class="icon"><i class="fa fa-calendar"></i></span>&ensp;<i>{{ post.date_creation }}</i>
+            <br>
+            <span class="icon"><i class="fa fa-flag"></i></span>&nbsp;
+            {% for category in post.post_category.all %}
+            <a href="{% url 'category_list' category.id %}" style="text-decoration: none;">"{{ category }}"</a>
+            {% endfor %}
+            <br>
+                <span style="color: green;"><span class="icon"><i class="fa fa-file-text"></i></span>&ensp;<i>{{ post.post_title }}</i></span>
+             <br>
+            </font>
+            <br>
+        <font size="4">
+            <span style="color: brown;"><span class="icon"><i class="fa fa-align-left"></i></span>&ensp;<i>{{ post.post_text|truncatewords:10|censor }}</i></span> <a href="{% url 'post_detail' post.pk %}" style="text-decoration: none;">
+            <span class="icon"><i class="fa fa-book"></i></span>&nbsp;{% trans 'Read completely' %}</a>
+        </font>
+        </td>
+    </tr>
+</table>
+        </div>
+<p></p>
+{% endfor %}
+{% else %}
+<h2>{% trans 'No publications' %}!</h2>
+{% endif %}
+{% endblock content %}

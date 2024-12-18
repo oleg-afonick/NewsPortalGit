@@ -1,0 +1,94 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load i18n %}
+{% block title %}
+Publications
+{% endblock title %}
+{% load static %}
+{% block content %}
+<nav class="fixed-top" style="background-color: #ecf0f3; margin-top: 56px;">
+{% include 'input_output.html' %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+<h3>{% trans 'All user comments' %} <span style="color: orangered;">{{ user }}</span>
+({% trans 'Total comments' %}: <span style="color: orangered;">{{ page_obj.paginator.count }})</span></h3>
+</nav>
+{% if user_comment_post_list %}
+{% for user_comment in user_comment_post_list %}
+    <div class="class=m-b-0 font-medium btn-rounded" style="margin-top: 80px">
+        <font size="3">
+<table width="100%" border="0">
+    <tr>
+        <td align="right">
+            <span class="icon"><i class="fa fa-calendar"></i></span>&nbsp;
+            <i>{{ user_comment.date_creation }}</i>&emsp;
+            <i>{% if user_comment.comment_rating > 3 %}
+            <span class="icon"><i class="fa fa-star"></i></span>&nbsp;{{ user_comment.comment_rating }}
+            {% elif user_comment.comment_rating > 0 %}
+            <span class="icon"><i class="fa fa-star-half-o"></i></span>&nbsp;{{ user_comment.comment_rating }}
+            {% else %}
+            <span class="icon"><i class="fa fa-star-o"></i></span>&nbsp;{{ user_comment.comment_rating }}
+            </i>
+            {% endif %}
+        </td>
+    </tr>
+</table>
+</font>
+        <font size="2">
+<table width="100%" border="0">
+    <tr>
+        <td align="justify">
+            <span style="color: green;"><span class="icon"><i class="fa fa-file-text"></i></span>&ensp;<i>{{ user_comment.post.post_title }}</i></span>
+            <br>
+            <span style="color: brown;"><span class="icon"><i class="fa fa-align-left"></i></span>&ensp;<i>{{ user_comment.post.post_text|truncatewords:10|censor }}</i></span>
+            <br>
+        </td>
+    </tr>
+</table>
+</font>
+        <br>
+<table style="width: 1250px;" width="100%" border="0">
+    <tr>
+        <td align="justify">
+            <font size="4">
+                <span class="icon"><i class="fa fa-comment"></i></span>&ensp;<span style="color: black;"><i>{{ user_comment.comment_text }}</i></span>
+            </font>
+            <br>
+        </td>
+    </tr>
+</table>
+        <font size="4">
+<table width="100%" border="0">
+    <tr>
+        <td align="right">
+        <span class="icon"><i class="fa fa-info-circle"></i></span>&nbsp;
+            <i><a href="{% url 'post_comment_detail' user_comment.id %}" style="text-decoration: none;">{% trans 'Details' %}</a></i>
+        </td>
+    </tr>
+</table>
+</font>
+        </div>
+<p></p>
+{% endfor %}
+{% else %}
+<h2>{% trans 'No comments' %}!</h2>
+{% endif %}
+{% if paginator.num_pages > 1 %}
+{% if page_obj.has_previous %}
+<a href="?page=1">1</a>
+{% if page_obj.previous_page_number != 1 %}
+...
+<a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+{% endif %}
+{% endif %}
+
+{{ page_obj.number }}
+
+{% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+{% if paginator.num_pages != page_obj.next_page_number %}
+...
+<a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock content %}
